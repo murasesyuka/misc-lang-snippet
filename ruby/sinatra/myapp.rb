@@ -4,6 +4,10 @@ get '/' do
   'Hello world!'
 end
 
+get '/hello/:name' do
+  "Hello #{params[:name]}"
+end
+
 post '/' do
   # .. create something
 end

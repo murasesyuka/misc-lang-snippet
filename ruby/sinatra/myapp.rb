@@ -8,6 +8,16 @@ get '/hello/:name' do |n|
   "Hello #{n}!"
 end
 
+get '/say/*/to/*' do
+  # matches /say/hello/to/world
+  params[:splat] #=> ["hello", "world"]
+end
+
+get '/download/*.*' do
+  # matches /download/path/to/file.xml
+  params[:splat] #=> ["path/to/file", "xml"]
+end
+
 post '/' do
   # .. create something
 end

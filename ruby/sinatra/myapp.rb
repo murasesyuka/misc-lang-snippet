@@ -8,8 +8,8 @@ get '/' do
   'Hello world!'
 end
 
-get %r{/hello/([\w]+)} do
-  "Hello, #{params[:captures].first}!"
+get %r{/hello/([\w]+)} do |c|
+  "Hello, #{c}!"
 end
 
 get '/say/*/to/*' do

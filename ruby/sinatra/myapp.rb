@@ -17,9 +17,9 @@ get '/say/*/to/*' do
   params[:splat] #=> ["hello", "world"]
 end
 
-get '/download/*.*' do
+get '/download/*.*' do |path, ext|
   # matches /download/path/to/file.xml
-  params[:splat] #=> ["path/to/file", "xml"]
+  [path, ext] #=> ["path/to/file", "xml"]
 end
 
 post '/' do

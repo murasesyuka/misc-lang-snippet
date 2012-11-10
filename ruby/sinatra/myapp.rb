@@ -22,6 +22,10 @@ get '/download/*.*' do |path, ext|
   [path, ext] #=> ["path/to/file", "xml"]
 end
 
+get '/posts.?:format?' do
+  # matches "GET /posts" and any extension "GET /posts.json", "GET /posts.xml" etc.
+end
+
 post '/' do
   # .. create something
 end

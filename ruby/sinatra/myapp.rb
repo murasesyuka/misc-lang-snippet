@@ -8,6 +8,15 @@ get '/' do
   'Hello world!'
 end
 
+get '/foo', :agent => /Songbird (\d.\d)[\d\/]*?/ do
+  "You're using Songbird version #{params[:agent][0]}"
+end
+
+get '/foo' do
+  # Matches non-songbird browsers
+  "You're not using Songbird"
+end
+
 get %r{/hello/([\w]+)} do |c|
   "Hello, #{c}!"
 end

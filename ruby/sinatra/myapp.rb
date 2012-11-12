@@ -24,6 +24,16 @@ get '/foo', :agent => /Songbird (\d.\d)[\d\/]*?/ do
   "You're using Songbird version #{params[:agent][0]}"
 end
 
+set(:probability){ |value| condition { rand <= value } }
+
+get '/win_a_car', :probability => 0.1 do
+  "You won!"
+end
+
+get '/win_a_car' do
+  "Sorry, you lost"
+end
+
 get '/foo' do
   # Matches non-songbird browsers
   "You're not using Songbird"

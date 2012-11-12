@@ -8,6 +8,18 @@ get '/' do
   'Hello world!'
 end
 
+get '/', :host_name => /^admin\./ do
+  "Admin Area, Access denied!"
+end
+
+get '/', :provides => 'html' do
+  haml :index
+end
+
+get '/', :provides => ['rss', 'atom', 'xml'] do
+  builder :feed
+end
+
 get '/foo', :agent => /Songbird (\d.\d)[\d\/]*?/ do
   "You're using Songbird version #{params[:agent][0]}"
 end

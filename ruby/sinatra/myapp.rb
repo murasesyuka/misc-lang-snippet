@@ -3,9 +3,14 @@ require 'rack-livereload'
 require "sinatra/reloader" if development?
 use Rack::LiveReload
 
+class Stream
+  def each
+    100.times {|i| yield "#{i}\n" }
+  end
+end
 
 get '/' do
-  'Hello world!'
+  Stream.new
 end
 
 get '/', :host_name => /^admin\./ do

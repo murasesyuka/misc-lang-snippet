@@ -2,17 +2,23 @@ package main
 
 import (
 	"fmt"
+	"math/big"
 )
 
-func prime_divide(n int64) []int64 {
-	r := make([]int64, 0, 10)
-	var a int64 = 2
-	for ; a <= n; {
-		if n % a == 0 {
-			r = append(r,a)
-			n /= a
+func prime_divide(n *big.Int) []*big.Int {
+	r := make([]*big.Int, 0, 10)
+	a := big.NewInt(2)
+	
+	for ; a.Cmp(n) == -1 || a.Cmp(n) == 0; {
+		t := big.NewInt(0)
+		t.Mod(n,a)
+
+		if t.Cmp(big.NewInt(0)) == 0 {
+			r = append(r, a)
+			a = big.NewInt(a.Int64())
+			n.Quo(n, a)
 		} else {
-			a++
+			a.Add(a, big.NewInt(1))
 		}
 	}
 	return r
@@ -25,7 +31,8 @@ func main(){
 	//fmt.Println(prime_divide(8))
 	//fmt.Println(prime_divide(13195))
 	
-	ret := prime_divide(600851475143)
+	//ret := prime_divide(big.NewInt(13195))
+	ret := prime_divide(big.NewInt(600851475143))
 	
 	fmt.Println(ret[len(ret)-1:])
 }

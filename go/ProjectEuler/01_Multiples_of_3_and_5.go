@@ -14,16 +14,25 @@ func is_multi_3_5(n int) bool {
 	return false
 }
 
-func main() {
-	sum := 0
-	var z []int
-	z = make([]int, 0, 10)
-	for i := 0; i < 10; i++ {
-		sum += i
-		z = append(z,i)
-		fmt.Println(i)
-		fmt.Println(is_multi_3_5(i))
+func sum(a []int) int {
+	var s int = 0
+	for _, v := range a {
+		s += v
 	}
-	fmt.Println(sum)
-	fmt.Println(z)
+	return s
+}
+
+func main() {
+	s := 0
+	var z []int
+	c := 10000
+	z = make([]int, 0, c)
+	for i := 0; i < c; i++ {
+		s += i
+		
+		if is_multi_3_5(i) {
+			z = append(z,i)
+		}
+	}
+	fmt.Println(sum(z))
 }

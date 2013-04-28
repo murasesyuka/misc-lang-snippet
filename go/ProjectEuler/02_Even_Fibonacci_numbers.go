@@ -26,5 +26,15 @@ func main() {
 		}
 	}
 
-	fmt.Println(z)
+	s := 0
+	i := 0
+	for _, e := range z {
+		i++
+		if i % 2 == 0 {
+			//fmt.Println(e)
+			s += e
+		}
+	}
+	
+	fmt.Println(s)
 }

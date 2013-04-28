@@ -4,11 +4,11 @@ import (
 	"fmt"
 	)
 
-func is_multi_3_5(n int) bool{
-	if (n % 3) == 0 {
+func is_multi_3_5(n int) bool {
+	switch {
+	case (n % 3) == 0:
 		return true
-	}
-	if (n % 5) == 0 {
+	case (n % 5) == 0:
 		return true
 	}
 	return false

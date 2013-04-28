@@ -13,9 +13,18 @@ func fibonacci() func() int {
 	}
 }
 
+
 func main() {
 	f := fibonacci()
-	for i := 0; i<10; i++{
-		fmt.Println(f())
+	z := make([]int, 0, 10)
+	for {
+		i := f()
+		if i < 400000000{
+			z = append(z,i)
+		} else {
+			break
+		}
 	}
+
+	fmt.Println(z)
 }

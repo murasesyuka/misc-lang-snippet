@@ -6,4 +6,9 @@ class MyArray
   def empty?
     true
   end
+
+  def << o
+    @array << o
+    self
+  end
 end

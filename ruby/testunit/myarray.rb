@@ -4,5 +4,6 @@ class MyArray
   end
 
   def empty?
+    true
   end
 end

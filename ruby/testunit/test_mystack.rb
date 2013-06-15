@@ -10,6 +10,11 @@ class TestMyStack < Test::Unit::TestCase
     assert(@stack.empty?,"empty error")
   end
 
+  def test_push_and_empty_myarray
+    @stack.push(3)
+    assert(!@stack.empty?)
+  end
+
   def test_push_and_pop_myarray
     @stack.push(3)
     assert_equal(@stack.pop, 3)

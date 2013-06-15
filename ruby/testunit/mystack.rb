@@ -4,7 +4,7 @@ class MyStack
   end
   
   def empty?
-    true
+    @array.empty?
   end
 
   def push(v)

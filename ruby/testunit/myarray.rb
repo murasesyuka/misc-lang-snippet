@@ -4,7 +4,7 @@ class MyArray
   end
 
   def empty?
-    true
+    @array.empty?
   end
 
   def << o

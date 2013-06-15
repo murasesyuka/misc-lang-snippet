@@ -9,4 +9,7 @@ class MyStack
   def pop
     3
   end
+
+  def size
+  end
 end

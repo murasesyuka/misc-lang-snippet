@@ -14,4 +14,9 @@ class TestMyStack < Test::Unit::TestCase
     @stack.push(3)
     assert_equal(@stack.pop, 3)
   end
+
+  def test_push_and_size_myarray
+    @stack.push(3)
+    assert_equal(@stack.size, 1)
+  end
 end

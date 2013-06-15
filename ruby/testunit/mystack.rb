@@ -1,9 +1,14 @@
 class MyStack
+  def initialize
+    @array = []
+  end
+  
   def empty?
     true
   end
 
   def push(v)
+    @array << v
   end
 
   def pop
@@ -11,6 +16,6 @@ class MyStack
   end
 
   def size
-    1
+    @array.size
   end
 end

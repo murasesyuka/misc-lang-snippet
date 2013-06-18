@@ -18,6 +18,9 @@ class TestMyStack < Test::Unit::TestCase
   def test_push_and_pop_myarray
     @stack.push(3)
     assert_equal(@stack.pop, 3)
+
+    @stack.push(5)
+    assert_equal(@stack.pop, 5)
   end
 
   def test_empty_pop_and_expect_exception_myarray

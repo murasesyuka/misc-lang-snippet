@@ -1,3 +1,7 @@
+module Stack
+  class EmptyStackError < StandardError; end
+end
+
 class MyStack
   def initialize
     @array = []

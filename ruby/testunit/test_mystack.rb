@@ -32,5 +32,8 @@ class TestMyStack < Test::Unit::TestCase
     
     @stack.push(5)
     assert_equal(@stack.size, 2)
+
+    @stack.pop
+    assert_equal(@stack.size, 1)
   end
 end

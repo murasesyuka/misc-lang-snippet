@@ -17,7 +17,7 @@ class MyStack
 
   def pop
     raise Stack::EmptyStackError if empty?
-    3
+    @array.pop
   end
 
   def size

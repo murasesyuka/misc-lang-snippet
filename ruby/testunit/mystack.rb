@@ -1,4 +1,4 @@
-module Stack
+class Stack
   class EmptyStackError < StandardError; end
 end
 
@@ -16,6 +16,7 @@ class MyStack
   end
 
   def pop
+    raise Stack::EmptyStackError if empty?
     3
   end
 

@@ -4,6 +4,11 @@ import socket,os
 
 s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 
+try:
+    os.unlink("/tmp/socket")
+except OSError:
+    pass 
+
 s.bind("/tmp/socket")
 s.listen(1)
 conn, addr = s.accept()

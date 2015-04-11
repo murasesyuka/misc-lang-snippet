@@ -5,14 +5,10 @@
 
 int func(void *arg)
 {
-	int n = (long)arg;
-	xtime dur = { 4, 0};
+	//int n = (long)arg;
+	//xtime dur = { 4, 0};
 
-	printf("start thread[%d]\n", n);
-
-	thrd_sleep(&dur);
-
-	printf("stop thread[%d]\n", n);
+	printf("%ld\n", (unsigned long int)thrd_current());
 
 	return 0;
 }

@@ -76,5 +76,6 @@ int main()
 		printf("staci[%d] = %d\n",i,s.v_[i]);
 	}
 	
+	mtx_destroy(&mtx);
 	return 0;
 }

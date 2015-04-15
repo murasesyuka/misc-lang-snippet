@@ -14,13 +14,12 @@ typedef struct Stack{
 int push(Stack10 *s, int x){
 	mtx_lock(s->mtx_);
 	
-	if(s->vused_ == S_SIZE){
-		
-		mtx_unlock(s->mtx_);
-		return -1;	/* Full */
+	while(s->vused_ >= S_SIZE){
+		cnd_wait(s->cnd_push_, s->mtx_);
 	}
 	s->v_[s->vused_++] = x;
-	
+
+	cnd_signal(s->cnd_pop_);
 	mtx_unlock(s->mtx_);
 	return 0;
 }
@@ -28,13 +27,12 @@ int push(Stack10 *s, int x){
 int pop(Stack10 *s, int *x){
 	mtx_lock(s->mtx_);
 	
-	if(s->vused_ == 0){
-		
-		mtx_unlock(s->mtx_);
-		return -1;
+	while(s->vused_ == 0){
+		cnd_wait(s->cnd_pop_, s->mtx_);
 	}
 	*x = s->v_[--s->vused_];
 	
+	cnd_signal(s->cnd_push_);
 	mtx_unlock(s->mtx_);
 	return 0;
 }
@@ -89,14 +87,16 @@ int main()
 	for(i=0; i<SIZE; i++) {
 		thrd_create(&thr_s[i], func, (void*)(Stack10*)&s);
 	}
-	for(i=0; i<SIZE; i++) {
-		thrd_join(thr_s[i], 0);
-	}
 
 	for(i=0; i<(SIZE*3); i++){
 		pop(&s, &n);
 		printf("%d : %d\n",i,n);
 	}
+
+	for(i=0; i<SIZE; i++) {
+		thrd_join(thr_s[i], 0);
+	}
+
 
 	/*
 	 * destroy

@@ -7,6 +7,8 @@ typedef struct Stack{
 	/* int vsize_; */
 	int vused_;
 	mtx_t *mtx_;
+	cnd_t *cnd_push_;
+	cnd_t *cnd_pop_;
 } Stack10;
 
 int push(Stack10 *s, int x){
@@ -51,20 +53,39 @@ int func(void *arg)
 
 int main()
 {
-	int i, ret;
+	int i, n, ret;
 	Stack10 s = {{0},0};
 	
 	mtx_t mtx;
+	cnd_t c_pu, c_po;
 	
 	enum {SIZE = 4};
 	thrd_t thr_s[SIZE];
 
+	/*
+	 * init
+	 */
 	ret = mtx_init(&mtx, mtx_plain);
 	if(ret != thrd_success){
 		return ret;
 	}
 	s.mtx_ = &mtx;
 	
+	ret = cnd_init(&c_pu);
+	if(ret != thrd_success){
+		return ret;
+	}
+	s.cnd_push_ = &c_pu;
+
+	ret = cnd_init(&c_po);
+	if(ret != thrd_success){
+		return ret;
+	}
+	s.cnd_pop_ = &c_po;
+
+	/*
+	 * run
+	 */
 	for(i=0; i<SIZE; i++) {
 		thrd_create(&thr_s[i], func, (void*)(Stack10*)&s);
 	}
@@ -72,10 +93,17 @@ int main()
 		thrd_join(thr_s[i], 0);
 	}
 
-	for(i=0; i<S_SIZE; i++){
-		printf("staci[%d] = %d\n",i,s.v_[i]);
+	for(i=0; i<(SIZE*3); i++){
+		pop(&s, &n);
+		printf("%d : %d\n",i,n);
 	}
-	
+
+	/*
+	 * destroy
+	 */
 	mtx_destroy(&mtx);
+	cnd_destroy(&c_pu);
+	cnd_destroy(&c_po);
+	
 	return 0;
 }

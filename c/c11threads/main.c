@@ -10,18 +10,30 @@ typedef struct Stack{
 } Stack10;
 
 int push(Stack10 *s, int x){
+	mtx_lock(s->mtx_);
+	
 	if(s->vused_ == S_SIZE){
+		
+		mtx_unlock(s->mtx_);
 		return -1;	/* Full */
 	}
 	s->v_[s->vused_++] = x;
+	
+	mtx_unlock(s->mtx_);
 	return 0;
 }
 
 int pop(Stack10 *s, int *x){
+	mtx_lock(s->mtx_);
+	
 	if(s->vused_ == 0){
+		
+		mtx_unlock(s->mtx_);
 		return -1;
 	}
 	*x = s->v_[--s->vused_];
+	
+	mtx_unlock(s->mtx_);
 	return 0;
 }
 

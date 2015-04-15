@@ -1,7 +1,5 @@
 #include <stdio.h>
-
-#define HAVE_PTHREAD
-#include "c11/threads.h"
+#include <threads.h>
 
 mtx_t mtx;
 

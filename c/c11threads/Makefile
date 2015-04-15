@@ -1,4 +1,4 @@
-CFLAGS = -Wall -I.
+CFLAGS = -Wall -I. -Ic11 -DHAVE_PTHREAD
 LDFLAGS = -pthread
 
 test:

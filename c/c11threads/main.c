@@ -11,7 +11,38 @@ typedef struct Stack{
 	cnd_t *cnd_pop_;
 } Stack10;
 
-int push(Stack10 *s, int x){
+int stack10_Constructor(Stack10 *s, mtx_t *mtx, cnd_t *c_pu, cnd_t *c_po){
+	int ret;
+	
+	ret = mtx_init(mtx, mtx_plain);
+	if(ret != thrd_success){
+		return ret;
+	}
+	s->mtx_ = mtx;
+	
+	ret = cnd_init(c_pu);
+	if(ret != thrd_success){
+		return ret;
+	}
+	s->cnd_push_ = c_pu;
+
+	ret = cnd_init(c_po);
+	if(ret != thrd_success){
+		return ret;
+	}
+	s->cnd_pop_ = c_po;
+
+	return 0;
+}
+
+void stack10_Destructor(Stack10 *s){
+	mtx_destroy(s->mtx_);
+	cnd_destroy(s->cnd_push_);
+	cnd_destroy(s->cnd_pop_);
+}
+
+
+int stack10_push(Stack10 *s, int x){
 	mtx_lock(s->mtx_);
 	
 	while(s->vused_ >= S_SIZE){
@@ -24,7 +55,7 @@ int push(Stack10 *s, int x){
 	return 0;
 }
 
-int pop(Stack10 *s, int *x){
+int stack10_pop(Stack10 *s, int *x){
 	mtx_lock(s->mtx_);
 	
 	while(s->vused_ == 0){
@@ -44,14 +75,14 @@ int func(void *arg)
 	Stack10 *s =(Stack10*)arg;
 	printf("thrd_current()vim is %ld\n", (unsigned long int)thrd_current());
 	for(i = 0; i<3; ++i){
-		push(s, i);
+		stack10_push(s, i);
 	}
 	return 0;
 }
 
 int main()
 {
-	int i, n, ret;
+	int i, n;
 	Stack10 s = {{0},0};
 	
 	mtx_t mtx;
@@ -63,23 +94,7 @@ int main()
 	/*
 	 * init
 	 */
-	ret = mtx_init(&mtx, mtx_plain);
-	if(ret != thrd_success){
-		return ret;
-	}
-	s.mtx_ = &mtx;
-	
-	ret = cnd_init(&c_pu);
-	if(ret != thrd_success){
-		return ret;
-	}
-	s.cnd_push_ = &c_pu;
-
-	ret = cnd_init(&c_po);
-	if(ret != thrd_success){
-		return ret;
-	}
-	s.cnd_pop_ = &c_po;
+	stack10_Constructor(&s, &mtx, &c_pu, &c_po);
 
 	/*
 	 * run
@@ -89,7 +104,7 @@ int main()
 	}
 
 	for(i=0; i<(SIZE*3); i++){
-		pop(&s, &n);
+		stack10_pop(&s, &n);
 		printf("%d : %d\n",i,n);
 	}
 
@@ -101,9 +116,7 @@ int main()
 	/*
 	 * destroy
 	 */
-	mtx_destroy(&mtx);
-	cnd_destroy(&c_pu);
-	cnd_destroy(&c_po);
+	stack10_Destructor(&s);
 	
 	return 0;
 }

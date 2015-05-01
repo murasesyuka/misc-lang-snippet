@@ -48,8 +48,8 @@ int main () {
 		printf("%d\n", i);
 		//if (pthread_kill(thread[i], 0) == ESRCH){
 			pthread_detach(thread[i]);
-			pthread_kill(thread[i], SIGTERM);//15 is kill Parent
-			//pthread_kill(thread[i], SIGHUP);//1
+			pthread_kill(thread[i], SIGHUP);//1 is kill Parent
+			//pthread_kill(thread[i], SIGTERM);//15 is kill Parent
 			//}
 		//pthread_detach(thread[i]);
 	}

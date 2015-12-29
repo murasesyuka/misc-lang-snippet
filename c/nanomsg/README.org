@@ -1,4 +1,8 @@
 
 * namemsg
+  
+  ref : [[http://tim.dysinger.net/posts/2013-09-16-getting-started-with-nanomsg.html][Getting Started with 'nanomsg']]
 
-ref : http://tim.dysinger.net/posts/2013-09-16-getting-started-with-nanomsg.html
+** default compile error
+
+   ref : [[http://stackoverflow.com/questions/21768542/libc-h-no-such-file-or-directory-when-compiling-nanomsg-pipeline-sample][libc.h: No such file or directory when compiling nanomsg pipeline sample]]

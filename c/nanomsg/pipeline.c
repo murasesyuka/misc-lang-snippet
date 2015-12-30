@@ -1,9 +1,5 @@
 #include <assert.h>
-
-#include <unistd.h>
-#include <string.h>
-#include <pthread.h>
-
+#include "libc.h"
 #include <stdio.h>
 #include <nanomsg/nn.h>
 #include <nanomsg/pipeline.h>

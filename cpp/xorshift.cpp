@@ -1,6 +1,7 @@
 #include <iostream>
 #include <chrono>
 #include <random>
+#include <string>
 
 using uint32 = unsigned int;
 
@@ -16,7 +17,7 @@ uint32 xorshift32()
 }
 
 template<typename F>
-void bench(const F& f)
+void bench(const F& f, std::string s = "")
 {
 	size_t N = 10000000;
 
@@ -30,7 +31,8 @@ void bench(const F& f)
 
 	auto diff = end - start;
 
-	std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(diff).count() << " msec" << std::endl;
+	std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(diff).count()
+			  << " msec : " << s << std::endl;
 
 	return;
 }
@@ -38,13 +40,19 @@ void bench(const F& f)
 
 int main(int argc, char *argv[])
 {
-	bench( []{ xorshift32(); } );
+	bench( []{ xorshift32(); },
+		   "xorshift32"
+		);
 
 	std::random_device rnd;
-	bench( [&rnd]{ rnd(); } );
+	bench( [&rnd]{ rnd(); },
+		   "std::random"
+		);
 
 	std::mt19937 mt(rnd());
-	bench( [&mt]{ mt(); } );
+	bench( [&mt]{ mt(); },
+		   "std::mt19937"
+		);
 	
 	return 0;
 }

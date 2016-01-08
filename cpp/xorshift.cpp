@@ -42,6 +42,9 @@ int main(int argc, char *argv[])
 
 	std::random_device rnd;
 	bench( [&rnd]{ rnd(); } );
+
+	std::mt19937 mt(rnd());
+	bench( [&mt]{ mt(); } );
 	
 	return 0;
 }

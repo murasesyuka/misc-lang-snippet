@@ -29,7 +29,7 @@ void bench(const F& f)
 
 	auto diff = end - start;
 
-	std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(diff).count() << std::endl;
+	std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(diff).count() << " msec" << std::endl;
 
 	return;
 }

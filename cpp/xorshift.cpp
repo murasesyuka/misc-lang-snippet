@@ -1,5 +1,6 @@
 #include <iostream>
 #include <chrono>
+#include <random>
 
 using uint32 = unsigned int;
 
@@ -38,6 +39,10 @@ void bench(const F& f)
 int main(int argc, char *argv[])
 {
 	bench( []{ xorshift32(); } );
+
+	std::random_device rnd;
+	bench( [&rnd]{ rnd(); } );
+	
 	return 0;
 }
 

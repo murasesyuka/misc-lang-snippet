@@ -33,15 +33,17 @@ uint32_t xorshift128()
 template<typename F>
 void bench(const F& f, std::string s = "")
 {
+	using std::chrono::system_clock;
+
 	size_t N = 10000000;
 
-	auto start = std::chrono::system_clock::now();
+	auto start = system_clock::now();
 
 	for (size_t i = 0; i < N; i++) {
 		f();
 	}
 
-	auto end = std::chrono::system_clock::now();
+	auto end = system_clock::now();
 
 	auto diff = end - start;
 

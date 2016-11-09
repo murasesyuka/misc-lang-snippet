@@ -1,7 +1,9 @@
+#define _GNU_SOURCE
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
 
@@ -22,6 +24,9 @@ main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
+    printf("get pipe buf size is %d\n", fcntl(pipefd[1], F_GETPIPE_SZ ));
+    //printf("get pipe buf size is %d\n", fcntl(pipefd[1], F_SETPIPE_SZ, 1024 ));
+
     cpid = fork();
     if (cpid == -1) {
         perror("fork");
@@ -40,6 +45,9 @@ main(int argc, char *argv[])
 
     } else {            /* 親プロセスは argv[1] をパイプへ書き込む */
         close(pipefd[0]);          /* 使用しない read 側はクローズする */
+
+	printf("write size is %lu\n", strlen(argv[1]));
+
         write(pipefd[1], argv[1], strlen(argv[1]));
         close(pipefd[1]);          /* 読み込み側が EOF に出会う */
         wait(NULL);                /* 子プロセスを待つ */

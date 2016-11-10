@@ -15,7 +15,7 @@ main(int argc, char *argv[])
     char buf[65536] = {0};
     int count = 0;
 
-    char dummy[65536] = {0};
+    char dummy[65536*3] = {0};
     dummy[6553-1] = '\n';
 
     if (argc != 2) {
@@ -52,9 +52,9 @@ main(int argc, char *argv[])
     } else {            /* 親プロセスは argv[1] をパイプへ書き込む */
         close(pipefd[0]);          /* 使用しない read 側はクローズする */
 
-	printf("write size is %lu\n", sizeof(char) * 65536 );
+	printf("write size is %lu\n", sizeof(char) * 65536 *3);
 
-        write(pipefd[1], dummy, sizeof(char) * 65536 );
+        write(pipefd[1], dummy, sizeof(char) * 65536 *3);
         close(pipefd[1]);          /* 読み込み側が EOF に出会う */
         wait(NULL);                /* 子プロセスを待つ */
         exit(EXIT_SUCCESS);

@@ -13,6 +13,7 @@ main(int argc, char *argv[])
     int pipefd[2];
     pid_t cpid;
     char buf;
+    int count = 0;
 
     if (argc != 2) {
         fprintf(stderr, "Usage: %s <string>\n", argv[0]);
@@ -36,8 +37,10 @@ main(int argc, char *argv[])
     if (cpid == 0) {    /* 子プロセスがパイプから読み込む */
         close(pipefd[1]);  /* 使用しない write 側はクローズする */
 
-        while (read(pipefd[0], &buf, 1) > 0)
-            write(STDOUT_FILENO, &buf, 1);
+        while (read(pipefd[0], &buf, 1) > 0){
+		//write(STDOUT_FILENO, &buf, 1);
+		printf("count %d\n", count++);
+	}
 
         write(STDOUT_FILENO, "\n", 1);
         close(pipefd[0]);
